@@ -50,7 +50,7 @@ export default function Register() {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsRegistered(true);
-      // setPageLevelLoader(false);
+      setPageLevelLoader(false);
       setFormData(initialFormData);
     } else {
       toast.error(data.message, {
