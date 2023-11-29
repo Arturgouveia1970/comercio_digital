@@ -1,9 +1,16 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import ProductButton from "./ProductButtons";
 import ProductTile from "./ProductTile";
+import { useEffect } from "react";
 
 export default function CommonListing({ data }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [])
 
   return (
     <section className="bg-white py-12 sm:py-16">
@@ -12,7 +19,11 @@ export default function CommonListing({ data }) {
           {
             data && data.length ?
             data.map(item => 
-              <article key={item._id} className="relative flex flex-col overflow-hidden border cursor-pointer">
+              <article 
+                key={item._id} 
+                className="relative flex flex-col overflow-hidden border cursor-pointer"
+                onClick={() => router.push(`/product/${item._id}`)}
+              >
                 <ProductTile item={item} />
                 <ProductButton item={item} />
               </article>
