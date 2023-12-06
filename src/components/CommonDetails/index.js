@@ -4,7 +4,7 @@ import { GlobalContext } from "@/context";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import ComponentLevelLoader from "../Loader/componentlevel";
-// import { addToCart } from "@/services/cart";
+import { addToCart } from "@/services/cart";
 import Notification from "../Notification";
 
 export default function CommonDetails({ item }) {
@@ -18,20 +18,20 @@ export default function CommonDetails({ item }) {
   async function handleAddToCart(getItem) {
     setComponentLevelLoader({ loading: true, id: "" });
 
-    // const res = await addToCart({ productID: getItem._id, userID: user._id });
+    const res = await addToCart({ productID: getItem._id, userID: user._id });
 
     if (res.success) {
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setComponentLevelLoader({ loading: false, id: "" });
-      // setShowCartModal(true);
+      setShowCartModal(true);
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setComponentLevelLoader({ loading: false, id: "" });
-      // setShowCartModal(true);
+      setShowCartModal(true);
     }
   }
 

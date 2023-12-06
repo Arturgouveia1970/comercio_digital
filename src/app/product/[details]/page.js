@@ -1,4 +1,4 @@
-// import CommonDetails from "@/components/CommonDetails";
+import CommonDetails from "@/components/CommonDetails";
 import { productById } from "@/services/product";
 
 export default async function ProductDetails({ params }) {
@@ -6,7 +6,5 @@ export default async function ProductDetails({ params }) {
 
   console.log(productDetailsData, "Artur");
 
-  return <h1>Details</h1>
-
-  // return <CommonDetails item={productDetailsData && productDetailsData.data} />;
+   return <CommonDetails item={productDetailsData && productDetailsData.data} />;
 }
