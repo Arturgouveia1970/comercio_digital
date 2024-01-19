@@ -68,10 +68,10 @@ export default function Checkout() {
             product: item.productID,
           })),
           paymentMethod: "Stripe",
-          totalPrice: cartItems.reduce(
-            (total, item) => item.productID.price + total,
-            0
-          ),
+          totalPrice: cartItems.reduce((total, item) => {
+            const price = typeof item.productID.price === 'string' ? parseFloat(item.productID.price.replace(",", "")) : item.productID.price;
+            return price + total;
+          }, 0).toFixed(2),
           isPaid: true,
           isProcessing: true,
           paidAt: new Date(),
@@ -298,7 +298,7 @@ export default function Checkout() {
                   Object.keys(checkoutFormData.shippingAddress).length === 0
                 }
                 onClick={handleCheckout}
-                className="disabled:opacity-50 mt-5 mr-5 w-full  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
+                className="disabled:opacity-50 mt-5 mr-5 w-full inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
               >
                 Checkout
               </button>

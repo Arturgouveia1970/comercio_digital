@@ -15,7 +15,7 @@ export const initialCheckoutFormData = {
   isProcessing: true,
 };
 
-const protectedRoutes = ["/cart", "/checkout", "/account", "/orders", "/admin-view", "/admin-view/add-products",  "/admin-view/all-products"];
+const protectedRoutes = ["/cart", "/checkout", "/account", "/orders", "/admin-view"];
 
 const protectedAdminRoutes = [
   "/admin-view",
@@ -72,12 +72,12 @@ export default function GlobalState({ children }) {
 
   useEffect(() => {
     if (
-      // pathName !== "/register" &&
-      // !pathName.includes("product") &&
-      // pathName !== "/" &&
+      pathName !== "/register" &&
+      !pathName.includes("product") &&
+      pathName !== "/" &&
       user &&
       Object.keys(user).length === 0 &&
-      protectedRoutes.indexOf(pathName) > -1
+      protectedRoutes.includes(pathName) > -1
     )
       router.push("/login");
   }, [user, pathName]);

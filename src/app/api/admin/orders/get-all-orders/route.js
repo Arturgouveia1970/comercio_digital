@@ -1,45 +1,43 @@
 import connectToDB from "@/database";
 import AuthUser from "@/middleware/AuthUser";
-import Cart from "@/models/cart";
 import Order from "@/models/order";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(req) {
+export async function GET(req) {
   try {
     await connectToDB();
     const isAuthUser = await AuthUser(req);
 
-    if (isAuthUser) {
-      const data = await req.json();
-      const { user } = data;
+    if (isAuthUser?.role === "admin") {
+      const getAllOrders = await Order.find({})
+        .populate("orderItems.product")
+        .populate("user");
 
-      const saveNewOrder = await Order.create(data);
-
-      if (saveNewOrder) {
-        await Cart.deleteMany({ userID: user });
-
+      if (getAllOrders) {
         return NextResponse.json({
           success: true,
-          message: "Products are on the way !",
+          data: getAllOrders,
         });
       } else {
         return NextResponse.json({
           success: false,
-          message: "Failed to create a order ! Please try again",
+          message:
+            "failed to fetch the orders ! Please try again after some time.",
         });
       }
     } else {
       return NextResponse.json({
         success: false,
-        message: "You are not authticated",
+        message: "You are not authorized !",
       });
     }
   } catch (e) {
+    console.log(e);
     return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again later from C.O.",
+      message: "Something went wrong ! Please try again later",
     });
   }
 }

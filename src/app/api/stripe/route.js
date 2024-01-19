@@ -36,7 +36,7 @@ export async function POST(req) {
     return NextResponse.json({
       status: 500,
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Something went wrong ! Please try again with Stripe",
     });
   }
 }
